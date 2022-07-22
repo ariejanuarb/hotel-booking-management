@@ -60,7 +60,7 @@ func main() {
 	router := app.NewRouter(userProfileController, userHotelController, hotelController, floorController, employeeController, roleController, bookingController, facilityController, roomfacilityController, roomController)
 
 	server := http.Server{
-		Addr:    "localhost:3080",
+		Addr:    "localhost:3060",
 		Handler: middleware.NewAuthMiddleware(router),
 	}
 
