@@ -127,6 +127,7 @@ func ToFloorResponse(floor domain.Floor) web.FloorResponse {
 		Id:      floor.Id,
 		Number:  floor.Number,
 		HotelId: floor.HotelId,
+		RoomId:  floor.RoomId,
 	}
 }
 

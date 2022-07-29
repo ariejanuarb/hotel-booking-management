@@ -28,14 +28,6 @@ func (repository *EmployeeRepositoryImpl) Save(ctx context.Context, tx *sql.Tx, 
 	return employee
 }
 
-/*func (repository *EmployeeRepositoryImpl) Update(ctx context.Context, tx *sql.Tx, employee domain.Employee) domain.Employee {
-	SQL := "update user_profile up inner join user_hotel on up.id = user_hotel.user_profile_id set up.name = ?, up.gender = ?, up.email = ?, up.password = ?, hotel_id = ? where up.id = ? and up.role_id = 2"
-	_, err := tx.ExecContext(ctx, SQL, employee.Name, employee.Gender, employee.Email, employee.Password, employee.Id)
-	helper.PanicIfError(err)
-
-	return employee
-}*/
-
 func (repository *EmployeeRepositoryImpl) Update(ctx context.Context, tx *sql.Tx, employee domain.Employee) domain.Employee {
 	SQL := "update user_profile up set up.name = ?, up.gender = ?, up.email = ?, up.password = ? where up.id = ? and up.role_id = 2"
 	_, err := tx.ExecContext(ctx, SQL, employee.Name, employee.Gender, employee.Email, employee.Password, employee.Id)

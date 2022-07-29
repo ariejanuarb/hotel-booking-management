@@ -36,6 +36,7 @@ func (service *FloorServiceImpl) Create(ctx context.Context, request web.FloorCr
 	floor := domain.Floor{
 		Number:  request.Number,
 		HotelId: request.HotelId,
+		RoomId:  request.RoomId,
 	}
 
 	floor = service.FloorRepository.Save(ctx, tx, floor)
@@ -58,6 +59,7 @@ func (service *FloorServiceImpl) Update(ctx context.Context, request web.FloorUp
 
 	floor.Number = request.Number
 	floor.HotelId = request.HotelId
+	floor.RoomId = request.RoomId
 
 	floor = service.FloorRepository.Update(ctx, tx, floor)
 

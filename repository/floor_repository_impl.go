@@ -16,8 +16,8 @@ func NewFloorRepository() FloorRepository {
 }
 
 func (repository *FloorRepositoryImpl) Save(ctx context.Context, tx *sql.Tx, floor domain.Floor) domain.Floor {
-	SQL := "insert into floor(number, hotel_id  values (?,?)"
-	result, err := tx.ExecContext(ctx, SQL, floor.Number, floor.HotelId)
+	SQL := "insert into floor(number, hotel_id, room_id) values (?,?,?)"
+	result, err := tx.ExecContext(ctx, SQL, floor.Number, floor.HotelId, floor.RoomId)
 	helper.PanicIfError(err)
 
 	id, err := result.LastInsertId()
@@ -28,8 +28,8 @@ func (repository *FloorRepositoryImpl) Save(ctx context.Context, tx *sql.Tx, flo
 }
 
 func (repository *FloorRepositoryImpl) Update(ctx context.Context, tx *sql.Tx, floor domain.Floor) domain.Floor {
-	SQL := "update floor set number = ?, hotel_id = ? where id = ?"
-	_, err := tx.ExecContext(ctx, SQL, floor.Number, floor.HotelId, floor.Id)
+	SQL := "update floor set number = ?, hotel_id = ?, room_id = ? where id = ?"
+	_, err := tx.ExecContext(ctx, SQL, floor.Number, floor.HotelId, floor.RoomId, floor.Id)
 	helper.PanicIfError(err)
 
 	return floor
@@ -58,7 +58,7 @@ func (repository *FloorRepositoryImpl) FindById(ctx context.Context, tx *sql.Tx,
 }
 
 func (repository *FloorRepositoryImpl) FindAll(ctx context.Context, tx *sql.Tx) []domain.Floor {
-	SQL := "select id, number, hotel_id from floor"
+	SQL := "select id, number, hotel_id, room_id from floor"
 	rows, err := tx.QueryContext(ctx, SQL)
 	helper.PanicIfError(err)
 	defer rows.Close()
@@ -66,7 +66,7 @@ func (repository *FloorRepositoryImpl) FindAll(ctx context.Context, tx *sql.Tx) 
 	var floors []domain.Floor
 	for rows.Next() {
 		floor := domain.Floor{}
-		err := rows.Scan(&floor.Id, &floor.Number, &floor.HotelId)
+		err := rows.Scan(&floor.Id, &floor.Number, &floor.HotelId, &floor.RoomId)
 		helper.PanicIfError(err)
 		floors = append(floors, floor)
 	}

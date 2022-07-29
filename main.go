@@ -8,8 +8,6 @@ import (
 	"booking-hotel/repository"
 	"booking-hotel/service"
 	"github.com/go-playground/validator/v10"
-	"os"
-
 	_ "github.com/go-sql-driver/mysql"
 	"net/http"
 )
@@ -61,7 +59,7 @@ func main() {
 	router := app.NewRouter(userProfileController, userHotelController, hotelController, floorController, employeeController, roleController, bookingController, facilityController, roomfacilityController, roomController)
 
 	server := http.Server{
-		Addr:    "https://hotel-booking-salt.herokuapp.com/" + os.Getenv("PORT") + "/",
+		Addr:    "localhost:3000",
 		Handler: middleware.NewAuthMiddleware(router),
 	}
 
